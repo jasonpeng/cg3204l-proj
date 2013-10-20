@@ -42,6 +42,10 @@ public class Crawler {
 		this.mParser = new Parser();
 		this.mAnalyzer = new Analyzer();
 	}
+	
+	public void setInitURL(List<String> initURL) {
+		this.mInitURL = initURL;
+	}
 
 	/**
 	 * Search images with a keyword
