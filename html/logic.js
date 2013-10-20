@@ -1,5 +1,4 @@
 ﻿$(document).ready(function(){
-	initialize();
 	
 	$("#btnGo").click(function(){
 			$("#result").css("visibility","visible");
@@ -11,20 +10,28 @@
 			$("#btnGo").click();
 		}
 	});
-}
+})
 
 function getResult(){
 	var keys = $("#keys").val();
+	var keywords = keys.split(" ").join("+");
 	$.ajax({
 		type: "GET",
 		url: "",
-		data: keys,
+		data: keywords,
 		cache: false,
 		success: function(data){
 			displayResult(data);
 		}
 	});
+	
 }
 
-function displayResult(){
+function displayResult(data){
+	var urls = data.split(" ");
+	for(var i=0;i<urls.length;i++){
+		var result = "<div class='result'>";
+		result += "<img src='" + urls[i] + "'></div>";
+		$(result).appendTo("#result");
+	}
 }

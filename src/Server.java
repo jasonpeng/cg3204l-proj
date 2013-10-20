@@ -8,7 +8,11 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.StringTokenizer;
+
+import model.Image;
 
 
 public class Server {
@@ -68,11 +72,13 @@ public class Server {
 				//
 				if (command.equals("")) 
 				{
-					filename = "html/index.html";					
+					filename = "html/index.html";	
+					sendFile(filename,out);
 			    }
 				//this is to get page
 				else if(command.indexOf('?') == -1){
-					filename = "html/" + command;		
+					filename = "html/" + command;	
+					sendFile(filename,out);
 				}
 				else{
 					//this is to call some method
@@ -81,82 +87,79 @@ public class Server {
 					if(command.indexOf('&') != -1){
 						command = command.substring(0,command.indexOf('&'));
 					}		
-					P(command);
-					//get a new word
-					/*if(command.equals("getword")){	
-						try {
-							P("Please enter a word:");
-							String word = readString();
-							out.writeBytes("HTTP/1.1 200 Okie \r\n");
-							out.writeBytes("Content-type: text/html\r\n");
-							out.writeBytes("\r\n");							
-							out.writeBytes(maskWord(word));
-							//store the word sent
-							recordWord(s,word);
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+					P(command);		
+					List<String> keys = Arrays.asList(command.split("\\+"));
+					List<String> urls = Arrays.asList("http://www.mit.edu","http://www.nus.edu.sg");
+					Crawler crawler = new Crawler(urls);
+					List<Image> results = crawler.search(keys.get(0));
+					P("search finished");
+					String response = "";
+					for(int i = 0;i<results.size();i++){	
+						P(results.get(i).getSrc());
+						response += results.get(i).getSrc();
+						if(i != (results.size() - 1)){
+							response += " ";
 						}
 					}
-					//check ans; format is check+"guess"
-					else if(command.startsWith("check")){
-						String response;
-						String guess = command.substring(command.indexOf("+")+1);
-						response = checkAns(s, guess);
-						//response to client
-						try {
-							out.writeBytes("HTTP/1.1 200 Okie \r\n");
-							out.writeBytes("Content-type: text/html\r\n");
-							out.writeBytes("\r\n");
-							out.writeBytes(response);
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}*/
-					//if only call some method, no need to send file
+					writeResponse(out,response);
 					closeConnection(s);
 					continue;
 				}
 			}
 			
-			try{		
-				// Open and read the file into buffer
-				File f = new File(filename);
-			      
-				if (f.canRead())
-				{
-					int size = (int)f.length();
-					
-					//Create a File InputStrem to read the File
-					FileInputStream fis = new FileInputStream(filename);
-					byte[] buffer = new byte[size];
-					fis.read(buffer);
-				
-					// Now, write buffer to client
-					// (but, send HTTP response header first)
-					
-					out.writeBytes("HTTP/1.1 200 Okie \r\n");
-					out.writeBytes("Content-type: text/html\r\n");
-					out.writeBytes("\r\n");
-					out.write(buffer,  0, size);
-				}
-				else
-				{
-					// File cannot be read.  Reply with 404 error.
-					out.writeBytes("HTTP/1.0 404 Not Found\r\n");
-					out.writeBytes("\r\n");
-					out.writeBytes("Cannot find " + filename + " on server");
-				}
-			}
-			catch (Exception ex){
-			}
+			
 
 			// Close connection 
 			closeConnection(s);
 		}
 	}
 
+	public static void writeResponse(DataOutputStream out,String s){
+		try {
+			out.writeBytes("HTTP/1.1 200 Okie \r\n");
+			out.writeBytes("Content-type: text/html\r\n");
+			out.writeBytes("\r\n");
+			out.writeBytes(s);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public static void sendFile(String filename,DataOutputStream out){
+		try{		
+			// Open and read the file into buffer
+			File f = new File(filename);
+		      
+			if (f.canRead())
+			{
+				int size = (int)f.length();
+				
+				//Create a File InputStrem to read the File
+				FileInputStream fis = new FileInputStream(filename);
+				byte[] buffer = new byte[size];
+				fis.read(buffer);
+			
+				// Now, write buffer to client
+				// (but, send HTTP response header first)
+				
+				out.writeBytes("HTTP/1.1 200 Okie \r\n");
+				out.writeBytes("Content-type: text/html\r\n");
+				out.writeBytes("\r\n");
+				out.write(buffer,  0, size);
+			}
+			else
+			{
+				// File cannot be read.  Reply with 404 error.
+				out.writeBytes("HTTP/1.0 404 Not Found\r\n");
+				out.writeBytes("\r\n");
+				out.writeBytes("Cannot find " + filename + " on server");
+			}
+		}
+		catch (Exception ex){
+		}
+	}
 	public static void closeConnection(Socket s){
     	try {
 			s.close();
