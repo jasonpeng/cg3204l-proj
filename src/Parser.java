@@ -21,7 +21,8 @@ public class Parser {
 	
 	private String iLink;
 	private String iText;
-	public void Parse(Document docsrc, String pageUrl)
+	
+	public void parse(Document docsrc, String pageUrl)
 	{
 		//get all images
 		doc = docsrc;
