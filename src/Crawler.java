@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -130,15 +131,19 @@ public class Crawler {
 	}
 
 	private void analyzeRelevance(List<Image> images, List<Link> links, String keyword) {
-		for (Image image : images) {
+		Iterator<Image> imageIterator = images.iterator();
+		while (imageIterator.hasNext()) {
+			Image image = imageIterator.next();
 			if (!mAnalyzer.checkRelevance(image, keyword)) {
-				images.remove(image);
+				imageIterator.remove();
 			}
 		}
 		
-		for (Link link : links) {
+		Iterator<Link> linkIterator = links.iterator();
+		while (linkIterator.hasNext()) {
+			Link link = linkIterator.next();
 			if (!mAnalyzer.checkRelevance(link, keyword)) {
-				links.remove(link);
+				linkIterator.remove();
 			}
 		}
 	}

@@ -3,7 +3,7 @@ package model;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Image {
+public class Image implements Comparable<Image> {
 
 	private String mSrc;
 	private String mAlt;
@@ -54,5 +54,14 @@ public class Image {
 		}
 		
 		return filename;
+	}
+
+	@Override
+	public int compareTo(Image o) {
+		if (this.mSrc.equals(o.mSrc)) {
+			return 0;
+		} else {
+			return 1;
+		}
 	}
 }
