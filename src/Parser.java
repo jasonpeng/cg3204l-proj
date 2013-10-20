@@ -47,7 +47,7 @@ public class Parser {
 	}
 	
 	private String makeAbsolute(String url, String link) {
-	    if (link.matches("http://.*")) {
+	    if (link.matches("http://.*") || link.matches("https://.*")) {
 	      return link;
 	    }
 	    if (link.matches("/.*") && url.matches(".*$[^/]")) {
