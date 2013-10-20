@@ -22,6 +22,7 @@ public class Crawler {
 
 	protected static final long DEFALT_SEARCH_LIMIT = 10;
 	protected static final int MAX_THREADS = 10;
+	protected static final int BATCH_SIZE = 5;
 
 	protected List<String> mInitURL;
 	protected long mSearchLimit;
@@ -63,11 +64,16 @@ public class Crawler {
 		// recursively crawl links starting with mInitURL
 		// until number of images reaches mSearchLimit
 		while (resultImageSet.size() < this.mSearchLimit) {
+			if (queueIndex >= URLQueue.size()) {
+				// no more url to fetch, exit
+				break;
+			}
+			
 			List<Future<Document>> futureList = new ArrayList<Future<Document>>();
 			ExecutorService executor = Executors
 					.newFixedThreadPool(Crawler.MAX_THREADS);
 			
-			for (int i = 0; i < 10; i++) {
+			for (int i = 0; i < Crawler.BATCH_SIZE; i++) {
 				// get the head element from the queue
 				String url = URLQueue.get(queueIndex);
 				
@@ -77,6 +83,9 @@ public class Crawler {
 				futureList.add(future);
 				
 				queueIndex++;
+				if (queueIndex >= URLQueue.size()) {
+					break;
+				}
 			}
 
 			for (Future<Document> future : futureList) {
@@ -89,6 +98,7 @@ public class Crawler {
 					List<Link> pageLinks = mParser.getLinks();
 					
 					// analyze content relevance
+					analyzeRelevance(pageImages, pageLinks, keyword);
 
 					// add related images to result
 					resultImageSet.addAll(pageImages);
@@ -117,6 +127,20 @@ public class Crawler {
 
 		List<Image> resultImageList = new ArrayList<Image>(resultImageSet);
 		return resultImageList;
+	}
+
+	private void analyzeRelevance(List<Image> images, List<Link> links, String keyword) {
+		for (Image image : images) {
+			if (!mAnalyzer.checkRelevance(image, keyword)) {
+				images.remove(image);
+			}
+		}
+		
+		for (Link link : links) {
+			if (!mAnalyzer.checkRelevance(link, keyword)) {
+				links.remove(link);
+			}
+		}
 	}
 
 	/**
