@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 import model.Image;
@@ -9,57 +10,69 @@ import org.jsoup.select.Elements;
 
 public class Parser {
 
-	/**
-	 * @param args
-	 */
-	private List<Image> Imagelist;
-	private List<Link> Linklist;
+	private List<Image> mImageList;
+	private List<Link> mLinkList;
 	private Document doc;
 	private String src;
 	private String alt;
 	private String caption;
 	
-	private String iLink;
-	private String iText;
+	public Parser() {
+		mImageList = new ArrayList<Image>();
+		mLinkList = new ArrayList<Link>();
+	}
 	
 	public void parse(Document docsrc, String pageUrl)
 	{
 		//get all images
 		doc = docsrc;
-		Elements images = doc.select("img[src~=(?i)\\.(png|jpe?g|gif)]");			
+		Elements images = doc.select("img[src~=(?i)\\.(png|jpe?g|gif)]");
 		for (Element image : images) {
- 
-				src = image.attr("src");
-				if (src.startsWith("/") == true)
-				{
-					src = pageUrl + src;
-				}
-					
+				src = makeAbsolute(pageUrl, image.attr("src"));
 				alt = image.attr("alt");
 				caption = image.attr("caption");
-				Imagelist.add(new Image(src,alt,caption));
+				mImageList.add(new Image(src,alt,caption));
 		}
 		Elements links = doc.select("a[href]");
 		for (Element link : links) {
- 
+			String href;
+			String text;
 			// get the value from href attribute
-			iLink = link.attr("href");
-			if (iLink.startsWith("/") == true)
-			{
-				iLink = pageUrl + iLink;
-			}
-			iText = link.text();
-			Linklist.add(new Link(iLink,iText));
+			href = makeAbsolute(pageUrl, link.attr("href"));
+			text = link.text();
+			
+			mLinkList.add(new Link(href, text));
 		}
  
 	}
+	
+	private String makeAbsolute(String url, String link) {
+	    if (link.matches("http://.*")) {
+	      return link;
+	    }
+	    if (link.matches("/.*") && url.matches(".*$[^/]")) {
+	      return url + "/" + link;
+	    }
+	    if (link.matches("[^/].*") && url.matches(".*[^/]")) {
+	      return url + "/" + link;
+	    }
+	    if (link.matches("/.*") && url.matches(".*[/]")) {
+	      return url + link;
+	    }
+	    if (link.matches("/.*") && url.matches(".*[^/]")) {
+	      return url + link;
+	    }
+	    throw new RuntimeException("Cannot make the link absolute. Url: " + url
+	        + " Link " + link);
+	  }
+	
 	public List<Image> getImages()
 	{
-		return Imagelist;
+		return mImageList;
 	}
 	public List<Link> getLinks()
 	{
-		return Linklist;
+		return mLinkList;
 	}
 
 }
