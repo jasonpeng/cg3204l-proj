@@ -1,43 +1,58 @@
 package model;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Image {
 
-	/**
-	 * @param args
-	 */
-	private String Src;
-	private String Alt;
-	private String Caption;
+	private String mSrc;
+	private String mAlt;
+	private String mCaption;
+	private String mFilename;
+
+	public Image(String src, String alt, String caption) {
+		mSrc = src;
+		mAlt = alt;
+		mCaption = caption;
+		mFilename = filenameFromSrc(mSrc);
+	}
+
+	public void setSrc(String srcUrl) {
+		mSrc = srcUrl;
+	}
+
+	public void setAlt(String altsrc) {
+		mAlt = altsrc;
+	}
+
+	public void setCaption(String captionsrc) {
+		mCaption = captionsrc;
+	}
+
+	public String getSrc() {
+		return mSrc;
+	}
+
+	public String getAlt() {
+		return mAlt;
+	}
+
+	public String getCaption() {
+		return mCaption;
+	}
 	
-	public Image(String srcurl, String altsrc, String captionsrc)
-	{
-		Src = srcurl;
-		Alt = altsrc;
-		Caption = captionsrc;
-	}
-	public void setSrc(String srcUrl)
-	{
-		Src = srcUrl;
+	public String getFilename() {
+		return mFilename;
 	}
 	
-	public void setAlt(String altsrc)
-	{
-		Alt = altsrc;
-	}
-	public void setCaption(String captionsrc)
-	{
-		Caption = captionsrc;
-	}
-	public String getSrc()
-	{
-		return Src;
-	}
-	public String getAlt()
-	{
-		return Alt;
-	}
-	public String getCaption()
-	{
-		return Caption;
+	private String filenameFromSrc(String src) {
+		String filename = "";
+		Pattern filenamePattern = Pattern.compile("(.+)\\.(jpg|jpeg|gif|png|tiff)");
+		Matcher matcher = filenamePattern.matcher(src);
+		if (matcher.find()) {
+			filename = matcher.group(1);
+		}
+		
+		return filename;
 	}
 }
