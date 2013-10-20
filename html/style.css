@@ -14,9 +14,6 @@ color:#cdbfe3;
 margin-top:-3px;
 margin-bottom:3px;
 }
-#result div{
-margin-top:20px;
-}
 #result{
 font-size:22px;
 margin-top:20px;
@@ -27,6 +24,22 @@ height:34px;
 font-size:20px;
 }
 div.result{
-width:100px;
-height:100px;
+float: left;
+width:200px;
+height:200px;
+margin-left:20px;
+margin-top:20px;
+overflow:hidden;
+border: 1px solid #eee;
+//background:#C0C0C0;
+}
+div.result img.tall{
+max-height: 100%;
+max-width:100%;
+width: auto;
+}
+div.result img.wide{
+max-height: 100%;
+max-width:100%;
+height: auto;
 }
