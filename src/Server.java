@@ -140,6 +140,7 @@ public class Server {
 				FileInputStream fis = new FileInputStream(filename);
 				byte[] buffer = new byte[size];
 				fis.read(buffer);
+				fis.close();
 			
 				// Now, write buffer to client
 				// (but, send HTTP response header first)
