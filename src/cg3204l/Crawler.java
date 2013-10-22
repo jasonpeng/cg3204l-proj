@@ -95,27 +95,29 @@ public class Crawler {
 				try {
 					Document doc = future.get();
 					
-					// parse the HTML content
-					mParser.parse(doc);
-					List<Image> pageImages = mParser.getImages();
-					List<Link> pageLinks = mParser.getLinks();
-					
-					// analyze content relevance
-					analyzeRelevance(pageImages, pageLinks, keyword);
-
-					// add related images to result
-					resultImageSet.addAll(pageImages);
-					
-					// add related links to queue
-					List<String> linkURLs = new ArrayList<String>();
-					for (Link link : pageLinks) {
-						linkURLs.add(link.getHref());
-					}
-					
-					for (String url : linkURLs) {
-						// add url to queue only if it's new
-						if (uniqueURL.add(url)) {
-							URLQueue.add(url);
+					if (doc != null) {				
+						// parse the HTML content
+						mParser.parse(doc);
+						List<Image> pageImages = mParser.getImages();
+						List<Link> pageLinks = mParser.getLinks();
+						
+						// analyze content relevance
+						analyzeRelevance(pageImages, pageLinks, keyword);
+	
+						// add related images to result
+						resultImageSet.addAll(pageImages);
+						
+						// add related links to queue
+						List<String> linkURLs = new ArrayList<String>();
+						for (Link link : pageLinks) {
+							linkURLs.add(link.getHref());
+						}
+						
+						for (String url : linkURLs) {
+							// add url to queue only if it's new
+							if (uniqueURL.add(url)) {
+								URLQueue.add(url);
+							}
 						}
 					}
 				} catch (InterruptedException e) {
