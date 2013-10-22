@@ -18,6 +18,9 @@ public class CGHTTPClient {
 	protected URI mURI;
 	protected String mHost;
 	protected int mPort;
+	protected String mScheme;
+	protected String mAuthority;
+	
 	protected String mRaw;
 	protected String mResponse;
 
@@ -27,6 +30,8 @@ public class CGHTTPClient {
 			mURI = new URI(url);
 			mHost = mURI.getHost();
 			mPort = mURI.getPort();
+			mScheme = mURI.getScheme();
+			mAuthority = mURI.getAuthority();
 
 			if (mPort < 0) {
 				mPort = DEFAULT_PORT_NUMBER;
@@ -36,7 +41,7 @@ public class CGHTTPClient {
 		}
 	}
 
-	public synchronized void get() {
+	public void get() {
 		try {
 			// Create new socket to the server
 			Socket socket = new Socket(mHost, mPort);
@@ -117,7 +122,6 @@ public class CGHTTPClient {
 					
 					br.readLine();
 					
-					
 					chunkLength = Integer.parseInt(br.readLine(), 16);
 				}
 			}
@@ -136,6 +140,14 @@ public class CGHTTPClient {
 
 	public String getResponse() {
 		return mResponse;
+	}
+	
+	public String getScheme() {
+		return mScheme;
+	}
+	
+	public String getAuthority() {
+		return mAuthority;
 	}
 
 }

@@ -14,9 +14,16 @@ public class FetcherCallable implements Callable<Document> {
 
 	@Override
 	public Document call() throws Exception {
-
 		// fetch html content from URL
-		Document doc = Jsoup.connect(mURL).get();
+		CGHTTPClient client = new CGHTTPClient(mURL);
+		client.get();
+		String html = client.getResponse();
+		Document doc = null;
+		if (html != null) {
+			doc = Jsoup.parse(html);
+		}
+		String baseUri = client.getScheme() + "://" + client.getAuthority();
+		doc.setBaseUri(baseUri);
 		return doc;
 	}
 }
