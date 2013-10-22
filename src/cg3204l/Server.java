@@ -24,7 +24,7 @@ public class Server {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		try {
-			mServerSocket = new ServerSocket(80);
+			mServerSocket = new ServerSocket(8000);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -91,7 +91,7 @@ public class Server {
 					}		
 					P(command);		
 					List<String> keys = Arrays.asList(command.split("\\+"));
-					List<String> urls = Arrays.asList("http://www.mit.edu","http://www.nus.edu.sg");
+					List<String> urls = Arrays.asList("http://www.mit.edu");
 					Crawler crawler = new Crawler(urls);
 					List<Image> results = crawler.search(keys.get(0));
 					P("search finished");
