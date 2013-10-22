@@ -1,4 +1,4 @@
-package model;
+package cg3204l.model;
 
 public class Link implements Comparable<Link> {
 

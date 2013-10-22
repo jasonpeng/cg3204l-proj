@@ -1,12 +1,14 @@
+package cg3204l;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Image;
-import model.Link;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
+import cg3204l.model.Image;
+import cg3204l.model.Link;
 
 public class Parser {
 

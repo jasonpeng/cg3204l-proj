@@ -1,3 +1,4 @@
+package cg3204l;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -12,7 +13,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import model.Image;
+import cg3204l.model.Image;
+
 
 
 public class Server {

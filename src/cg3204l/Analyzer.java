@@ -1,5 +1,6 @@
-import model.Image;
-import model.Link;
+package cg3204l;
+import cg3204l.model.Image;
+import cg3204l.model.Link;
 
 /**
  * 

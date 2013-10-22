@@ -1,3 +1,4 @@
+package cg3204l;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -11,8 +12,9 @@ import java.util.concurrent.Future;
 
 import org.jsoup.nodes.Document;
 
-import model.Image;
-import model.Link;
+import cg3204l.model.Image;
+import cg3204l.model.Link;
+
 
 /**
  * 
