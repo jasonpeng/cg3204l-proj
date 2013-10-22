@@ -32,11 +32,14 @@ public class Analyzer {
 				+ link.getText();
 		
 		// naive implementation
+		/*
 		if (text.contains(keyword)) {
 			return true;
 		} else {
 			return false;
 		}
+		*/
+		return true;
 	}
 	
 	
