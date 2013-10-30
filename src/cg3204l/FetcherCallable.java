@@ -21,9 +21,10 @@ public class FetcherCallable implements Callable<Document> {
 		Document doc = null;
 		if (html != null) {
 			doc = Jsoup.parse(html);
+			String baseUri = client.getScheme() + "://" + client.getAuthority();
+			doc.setBaseUri(baseUri);
 		}
-		String baseUri = client.getScheme() + "://" + client.getAuthority();
-		doc.setBaseUri(baseUri);
+		
 		return doc;
 	}
 }
