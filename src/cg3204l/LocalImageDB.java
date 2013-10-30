@@ -30,19 +30,6 @@ public class LocalImageDB {
 	      // it probably means no database file is found
 	      System.err.println(e.getMessage());
 	    }
-	    finally
-	    {
-	      try
-	      {
-	        if(mConnection != null)
-	          mConnection.close();
-	      }
-	      catch(SQLException e)
-	      {
-	        // connection close failed.
-	        System.err.println(e);
-	      }
-	    }
 	}
 	
 	public List<String> search(String keyword, Date date) {
@@ -70,7 +57,8 @@ public class LocalImageDB {
 			Statement statement = mConnection.createStatement();
 			
 			for (String url : urlList) {
-				statement.executeUpdate("insert into image values (" + url + "," + keyword + ")");
+				statement
+				.executeUpdate("insert or replace into image (url, keyword)values ('" + url + "','" + keyword + "')");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
