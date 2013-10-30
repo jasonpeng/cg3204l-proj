@@ -21,7 +21,7 @@ public class CreateImageDB {
 	      statement.setQueryTimeout(30);  // set timeout to 30 sec.
 
 	      statement.executeUpdate("drop table if exists image");
-	      statement.executeUpdate("create table image (id integer PRIMARY KEY, url string, keyword string)");
+	      statement.executeUpdate("create table image (id integer PRIMARY KEY, url string, keyword string, unique(url, keyword))");
 
 	      ResultSet rs = statement.executeQuery("select * from image where keyword like '%abc%'");
 	      
