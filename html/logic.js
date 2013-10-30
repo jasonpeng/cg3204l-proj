@@ -25,12 +25,13 @@ function getResult(){
 			displayResult(data);
 		}
 	});
-	
+	//displayResult("http://www.mit.edu/img/BackImage.jpg");
 }
 function clearResult(){
 	$("#result").html("");
 }
 function displayResult(data){
+	console.log(data);
 	var urls = data.split(" ");
 	for(var i=0;i<urls.length;i++){
 		
@@ -43,18 +44,38 @@ function displayResult(data){
 }
 function adjustSize(){
 	$("#result").find("img").each(function(){
-		var imgClass = ($(this).width()/$(this).height() > 1) ? 'wide' : 'tall';
-		$(this).addClass(imgClass);
-		var parent = $(this).parents(".result").get(0);
-		if( $(parent).height() > $(this).height()){
-		    var h = $(parent).height()/2;
-			h -= $(this).height()/2;
-			$(this).css("margin-top",h+"px");
-		}
-		if($(parent).width() > $(this).width()){
-			var w = $(parent).width()/2;
-			w -= $(this).width()/2;
-			$(this).css("margin-left",w+"px");
-		}
+		$(this).load(function(){
+			var height = $(this).height();
+			var width = $(this).width();	
+			var parent = $(this).parents(".result").get(0);			
+			if(width >= height){
+				$(this).addClass("wide");
+				if(width > $(parent).width()){
+					var width_view = $(parent).width();
+					var height_view = height*width_view/width;
+					var top = $(parent).height()/2 - height_view/2;
+					$(this).css("margin-top",top+"px");
+				}
+				else{
+					var top = $(parent).height()/2 - height/2;
+					$(this).css("margin-top",top+"px");
+				}
+			}
+			else{
+				$(this).addClass("tall");
+				if(height > $(parent).height()){
+					//adjusted by css
+				}
+				else{
+					var top = $(parent).height()/2 - height/2;
+					$(this).css("margin-top",top+"px");
+				}
+			}
+			/*if($(parent).width() > width){
+				var left = $(parent).width()/2 - width/2;
+				$(this).css("margin-left",left+"px");
+			}*/
+		});
+		
 	});
 }

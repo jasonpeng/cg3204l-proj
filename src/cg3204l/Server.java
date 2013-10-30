@@ -95,7 +95,7 @@ public class Server {
 					Crawler crawler = new Crawler(urls);
 					List<Image> results = crawler.search(keys.get(0));
 					P("search finished");
-					String response = "";
+					String response = "";			
 					for(int i = 0;i<results.size();i++){	
 						P(results.get(i).getSrc());
 						response += results.get(i).getSrc();

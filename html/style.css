@@ -31,7 +31,12 @@ margin-left:20px;
 margin-top:20px;
 overflow:hidden;
 border: 1px solid #eee;
+text-align:center;
 //background:#C0C0C0;
+}
+div.result img{
+max-height: 100%;
+max-width:100%;
 }
 div.result img.tall{
 max-height: 100%;
