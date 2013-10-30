@@ -9,6 +9,7 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -20,8 +21,14 @@ import cg3204l.model.Image;
 public class Server {
 
 	private static ServerSocket mServerSocket;
-	
+	private static LocalImageDB mDB;
 	public static void main(String[] args) {
+		try {
+			mDB = new LocalImageDB();
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		// TODO Auto-generated method stub
 		try {
 			mServerSocket = new ServerSocket(8000);
@@ -91,26 +98,39 @@ public class Server {
 					}		
 					P(command);		
 					List<String> keys = Arrays.asList(command.split("\\+"));
-					List<String> urls = Arrays.asList("http://www.bbc.co.uk", "http://www.nytimes.com");
-					Crawler crawler = new Crawler(urls);
-					List<Image> results = crawler.search(keys.get(0));
-					P("search finished");
-					String response = "";			
-					for(int i = 0;i<results.size();i++){	
-						P(results.get(i).getSrc());
-						response += results.get(i).getSrc();
-						if(i != (results.size() - 1)){
-							response += " ";
+					List<String> localResults = mDB.search(keys.get(0), null);
+					String response = "";
+					if(localResults.size()!=0){
+						P("search finished");							
+						for(int i = 0;i<localResults.size();i++){	
+							P(localResults.get(i));
+							response += localResults.get(i);
+							if(i != (localResults.size() - 1)){
+								response += " ";
+							}
 						}
 					}
+					else{
+						List<String> urls = Arrays.asList("http://www.bbc.co.uk", "http://www.nytimes.com");
+						Crawler crawler = new Crawler(urls);
+						List<Image> results = crawler.search(keys.get(0));
+						List<String> imageUrls = new ArrayList<String>();
+						P("search finished");		
+						for(int i = 0;i<results.size();i++){	
+							P(results.get(i).getSrc());
+							imageUrls.add(results.get(i).getSrc());
+							response += results.get(i).getSrc();
+							if(i != (results.size() - 1)){
+								response += " ";
+							}
+						}
+						mDB.insert(imageUrls, keys.get(0));
+					}				
 					writeResponse(out,response);
 					closeConnection(s);
 					continue;
 				}
 			}
-			
-			
-
 			// Close connection 
 			closeConnection(s);
 		}
