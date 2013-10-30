@@ -22,7 +22,7 @@ public class Server {
 
 	private static ServerSocket mServerSocket;
 	private static LocalImageDB mDB;
-	public static void main(String[] args) {
+	public static void main(String[] args) {		
 		try {
 			mDB = new LocalImageDB();
 		} catch (ClassNotFoundException e1) {
@@ -31,7 +31,7 @@ public class Server {
 		}
 		// TODO Auto-generated method stub
 		try {
-			mServerSocket = new ServerSocket(8000);
+			mServerSocket = new ServerSocket(80);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -90,7 +90,8 @@ public class Server {
 					sendFile(filename,out);
 				}
 				else{
-					//this is to call some method
+					//this is to call search method
+					long startTime = System.currentTimeMillis();
 					command = command.substring(command.indexOf('?')+1);
 					//this is to remove unused string
 					if(command.indexOf('&') != -1){
@@ -98,33 +99,31 @@ public class Server {
 					}		
 					P(command);		
 					List<String> keys = Arrays.asList(command.split("\\+"));
-					List<String> localResults = mDB.search(keys.get(0), null);
+					SearchResult searchResult = new SearchResult();
+					List<Image> localImages = mDB.search(keys.get(0), null);
 					String response = "";
-					if(localResults.size()!=0){
-						P("search finished");							
-						for(int i = 0;i<localResults.size();i++){	
-							P(localResults.get(i));
-							response += localResults.get(i);
-							if(i != (localResults.size() - 1)){
-								response += " ";
-							}
-						}
+					if(localImages.size()!=0){
+						P("search finished");	
+						long endTime = System.currentTimeMillis();
+						double timeUsed = endTime - startTime;
+						searchResult.setTime(timeUsed/1000);
+						searchResult.addImageList(localImages);
+						response = searchResult.toString();
+						P(response);
 					}
 					else{
 						List<String> urls = Arrays.asList("http://www.bbc.co.uk", "http://www.nytimes.com");
 						Crawler crawler = new Crawler(urls);
-						List<Image> results = crawler.search(keys.get(0));
-						List<String> imageUrls = new ArrayList<String>();
+						crawler.setSearchLimit(3);
+						List<Image> onlineImages = crawler.search(keys.get(0));
 						P("search finished");		
-						for(int i = 0;i<results.size();i++){	
-							P(results.get(i).getSrc());
-							imageUrls.add(results.get(i).getSrc());
-							response += results.get(i).getSrc();
-							if(i != (results.size() - 1)){
-								response += " ";
-							}
-						}
-						mDB.insert(imageUrls, keys.get(0));
+						long endTime = System.currentTimeMillis();
+						double timeUsed = endTime - startTime;
+						searchResult.setTime(timeUsed/1000);
+						searchResult.addImageList(onlineImages);
+						response = searchResult.toString();
+						P(response);
+						mDB.insert(onlineImages, keys.get(0));
 					}				
 					writeResponse(out,response);
 					closeConnection(s);

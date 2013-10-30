@@ -8,12 +8,14 @@ public class Image {
 	private String mSrc;
 	private String mAlt;
 	private String mCaption;
+	private String mSiteUrl;
 	private String mFilename;
 
-	public Image(String src, String alt, String caption) {
+	public Image(String src, String alt, String caption, String siteurl) {
 		mSrc = src;
 		mAlt = alt;
 		mCaption = caption;
+		mSiteUrl = siteurl;
 		mFilename = filenameFromSrc(mSrc);
 	}
 
@@ -29,6 +31,14 @@ public class Image {
 		mCaption = captionsrc;
 	}
 
+	public void setSiteUrl(String sitesrc) {
+		mSiteUrl = sitesrc;
+	}
+	
+	public String getSiteUrl() {
+		return mSiteUrl;
+	}
+	
 	public String getSrc() {
 		return mSrc;
 	}

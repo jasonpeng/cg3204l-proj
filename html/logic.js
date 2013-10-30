@@ -1,9 +1,13 @@
 ﻿$(document).ready(function(){
 	
 	$("#btnGo").click(function(){
+		if(!$(this).hasClass("disabled")){
 			$("#result").css("visibility","visible");
 			clearResult();
+			$(this).addClass("disabled");
+			setLoader("show");
 			getResult();
+		}
 	});
 	
 	$("#keys").keyup(function(event){
@@ -13,6 +17,17 @@
 	});
 })
 
+function setLoader(status){
+	if(status == "hide"){
+		$("#loader").css("visibility","hidden");
+	}
+	else if(status == "show"){
+		$("#loader").css("visibility","visible");
+	}
+	else{
+	}
+}
+
 function getResult(){
 	var keys = $("#keys").val();
 	var keywords = keys.split(" ").join("+");
@@ -21,8 +36,10 @@ function getResult(){
 		url: "",
 		data: keywords,
 		cache: false,
-		success: function(data){
-			displayResult(data);
+		success: function(jsonString){
+			displayResult(jsonString);
+			setLoader("hide");
+			$("#btnGo").removeClass("disabled");
 		}
 	});
 	//displayResult("http://www.mit.edu/img/BackImage.jpg");
@@ -30,15 +47,19 @@ function getResult(){
 function clearResult(){
 	$("#result").html("");
 }
-function displayResult(data){
-	console.log(data);
-	var urls = data.split(" ");
-	for(var i=0;i<urls.length;i++){
-		
+function displayResult(jsonString){
+	console.log(jsonString);
+	var data = eval('(' + jsonString + ')');
+	for(var i=0;i<data.images.length;i++){	
+		var imageUrl = data.images[i].imageUrl;
+		var siteUrl = data.images[i].siteUrl;
 		var result ="<div class='result'>";
-		result += "<a target='_blank' href='" + urls[i] + "'>" 
-		result += "<img src='" + urls[i] + "'></a></div>";
+		result += "<a target='_blank' title='view full size image' href='" + imageUrl + "'>" 
+		result += "<img src='" + imageUrl + "'></a>"
+		result += "<a class='source' title='view original website' target='_blank' href='" + siteUrl +"'>source</a>"
+		result += "</div>";
 		$(result).appendTo("#result");
+		$("#feedback").html("Time used: " + data.timeUsed + "s");
 	}
 	adjustSize();
 }

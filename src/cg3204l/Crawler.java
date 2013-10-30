@@ -23,7 +23,6 @@ public class Crawler {
 
 	protected List<String> mInitURL;
 	protected long mSearchLimit;
-	protected Parser mParser;
 	protected Analyzer mAnalyzer;
 	protected Set<Image> mImageSet;
 	protected Set<String> mURLSet;
@@ -43,7 +42,6 @@ public class Crawler {
 		this.mURLSet = new HashSet<String>();
 		this.mURLQueue = new ArrayList<String>();
 		
-		this.mParser = new Parser();
 		this.mAnalyzer = new Analyzer();
 	}
 	

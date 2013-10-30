@@ -14,8 +14,10 @@ public class Parser {
 
 	private List<Image> mImageList;
 	private List<Link> mLinkList;
+	private String mSiteUrl;
 
-	public Parser() {
+	public Parser(String url) {
+		mSiteUrl = url;
 		mImageList = new ArrayList<Image>();
 		mLinkList = new ArrayList<Link>();
 	}
@@ -31,7 +33,7 @@ public class Parser {
 			src = image.attr("abs:src");
 			alt = image.attr("alt");
 			caption = image.attr("caption");
-			mImageList.add(new Image(src, alt, caption));
+			mImageList.add(new Image(src, alt, caption,mSiteUrl));
 		}
 
 		// get all links

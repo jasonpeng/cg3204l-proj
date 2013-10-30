@@ -21,7 +21,7 @@ public class FetcherRunnable implements Runnable {
 	public FetcherRunnable (String url, Crawler crawler, String keyword) {
 		mURL = url;
 		mCrawler = crawler;
-		mParser = new Parser();
+		mParser = new Parser(url);
 		mAnalyzer = new Analyzer();
 		mKeyword = keyword;
 	}

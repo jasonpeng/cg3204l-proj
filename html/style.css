@@ -2,6 +2,9 @@
 background-color:#563d7c;
 margin-top:0px;
 }
+#navi{
+text-align:center;
+}
 #title{
 font-size:60px;
 color:#fff;
@@ -9,6 +12,22 @@ color:#fff;
 #description{
 font-size:21px;
 color:#cdbfe3;
+}
+#loader{
+width:45px;
+height:34px;
+display:inline-block;
+visibility:hidden;
+margin-bottom:-10px;
+background:url("loader.gif") no-repeat 0 0;
+}
+#feedback{
+width:200px;
+height:34px;
+font-size:21px;
+color:#fff;
+margin-bottom:-10px;
+display:inline-block;
 }
 #btnGo{
 margin-top:-3px;
@@ -19,12 +38,14 @@ font-size:22px;
 margin-top:20px;
 }
 #keys{
-width:300px;
+width:350px;
 height:34px;
+margin-left:300px;
 font-size:20px;
 }
 div.result{
 float: left;
+position:relative;
 width:200px;
 height:200px;
 margin-left:20px;
@@ -47,4 +68,11 @@ div.result img.wide{
 max-height: 100%;
 max-width:100%;
 height: auto;
+}
+div.result a.source{
+font-size:10px;
+color:red;
+position:absolute;
+bottom:0px;
+left:80px;
 }

@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import cg3204l.model.Image;
+
 public class LocalImageDB {
 	
 	protected Connection mConnection;
@@ -32,8 +34,8 @@ public class LocalImageDB {
 	    }
 	}
 	
-	public List<String> search(String keyword, Date date) {
-		List<String> urlList = new ArrayList<String>();
+	public List<Image> search(String keyword, Date date) {
+		List<Image> imagelList = new ArrayList<Image>();
 		
 		try {
 			Statement statement = mConnection.createStatement();
@@ -42,23 +44,24 @@ public class LocalImageDB {
 							+ keyword + "%'");
 			
 			while (rs.next()) {
-				urlList.add(rs.getString("url"));
+				Image image = new Image(rs.getString("src"), null, null, rs.getString("url"));
+				imagelList.add(image);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		return urlList;
+		return imagelList;
 	}
 
-	public void insert(List<String> urlList, String keyword) {
+	public void insert(List<Image> imageList, String keyword) {
 		
 		try {
 			Statement statement = mConnection.createStatement();
 			
-			for (String url : urlList) {
+			for (Image image : imageList) {
 				statement
-				.executeUpdate("insert or replace into image (url, keyword)values ('" + url + "','" + keyword + "')");
+				.executeUpdate("insert or replace into image (src, url, keyword)values ('" + image.getSrc() + "','" + image.getSiteUrl() + "','" + keyword + "')");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

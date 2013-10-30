@@ -5,6 +5,11 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import cg3204l.LocalImageDB;
+import cg3204l.model.Image;
 
 public class CreateImageDB {
 
@@ -21,13 +26,20 @@ public class CreateImageDB {
 	      statement.setQueryTimeout(30);  // set timeout to 30 sec.
 
 	      statement.executeUpdate("drop table if exists image");
-	      statement.executeUpdate("create table image (id integer PRIMARY KEY, url string, keyword string, unique(url, keyword))");
-
+	      statement.executeUpdate("create table image (id integer PRIMARY KEY, src string, url string, keyword string, unique(url, keyword))");
+	      /*LocalImageDB lb =new LocalImageDB();
+	      List<Image> imgs = new ArrayList<Image>();
+	      Image i = new Image("abc", null, null, "abcabc");
+	      Image j = new Image("qwe", null, null, "qweqwe");
+	      imgs.add(i);
+	      imgs.add(j);
+	      lb.insert(imgs, "money");*/
 	      ResultSet rs = statement.executeQuery("select * from image where keyword like '%abc%'");
 	      
 	      while(rs.next())
 	      {
 	        // read the result set
+	    	System.out.println("src = " + rs.getString("src"));
 	        System.out.println("url = " + rs.getString("url"));
 	        System.out.println("keyowrd = " + rs.getString("keyword"));
 	      }
