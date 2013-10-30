@@ -91,7 +91,7 @@ public class Server {
 					}		
 					P(command);		
 					List<String> keys = Arrays.asList(command.split("\\+"));
-					List<String> urls = Arrays.asList("http://www.mit.edu");
+					List<String> urls = Arrays.asList("http://www.bbc.co.uk", "http://www.nytimes.com");
 					Crawler crawler = new Crawler(urls);
 					List<Image> results = crawler.search(keys.get(0));
 					P("search finished");
