@@ -79,7 +79,7 @@ public class CGHTTPClient {
 						.matcher(line);
 				if (contentLengthMatcher.find()) {
 					contentLength = new Integer(contentLengthMatcher.group(1));
-					System.out.println("Content-Length: " + contentLength);
+					//System.out.println("Content-Length: " + contentLength);
 				}
 				
 				// Transfer-Encoding: chunked
@@ -89,7 +89,7 @@ public class CGHTTPClient {
 						.matcher(line);
 				if (chunkedMatcher.find()) {
 					chunkedFlag = true;
-					System.out.println("Transfer-Encoding: chunked");
+					//System.out.println("Transfer-Encoding: chunked");
 				}
 				
 				// End of HTTP Header
