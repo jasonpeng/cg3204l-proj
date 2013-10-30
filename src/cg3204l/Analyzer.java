@@ -17,7 +17,7 @@ public class Analyzer {
 	public boolean checkRelevance(Image image, String keyword) {
 		String text = image.getAlt() + " "
 				+ image.getCaption() + " "
-				+ image.getFilename();
+				+ image.getSrc();
 		
 		// naive implementation
 		if (text.contains(keyword)) {
