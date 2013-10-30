@@ -3,7 +3,7 @@ package cg3204l.model;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Image implements Comparable<Image> {
+public class Image {
 
 	private String mSrc;
 	private String mAlt;
@@ -55,13 +55,29 @@ public class Image implements Comparable<Image> {
 		
 		return filename;
 	}
-
+	
 	@Override
-	public int compareTo(Image o) {
-		if (this.mSrc.equals(o.mSrc)) {
-			return 0;
-		} else {
-			return 1;
-		}
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Image))
+			return false;
+		Image other = (Image) obj;
+		if (mSrc == null) {
+			if (other.mSrc != null)
+				return false;
+		} else if (!mSrc.equals(other.mSrc))
+			return false;
+		return true;
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((mSrc == null) ? 0 : mSrc.hashCode());
+		return result;
 	}
 }

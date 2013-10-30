@@ -1,5 +1,6 @@
 package cg3204l;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -59,8 +60,8 @@ public class Crawler {
 	 * @return List of Image
 	 */
 	public List<Image> search(String keyword) {
-		Set<Image> resultImageSet = new TreeSet<Image>();
-		Set<String> uniqueURL = new TreeSet<String>(mInitURL);
+		Set<Image> resultImageSet = new HashSet<Image>();
+		Set<String> uniqueURL = new HashSet<String>(mInitURL);
 		List<String> URLQueue = new ArrayList<String>(uniqueURL);
 		int queueIndex = 0; 
 

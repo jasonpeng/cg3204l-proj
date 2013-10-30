@@ -1,6 +1,6 @@
 package cg3204l.model;
 
-public class Link implements Comparable<Link> {
+public class Link {
 
 	private String mHref;
 	private String mText;
@@ -27,11 +27,27 @@ public class Link implements Comparable<Link> {
 	}
 
 	@Override
-	public int compareTo(Link o) {
-		if (this.mHref.equals(o.mHref)) {
-			return 0;
-		} else {
-			return 1;
-		}
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Link))
+			return false;
+		Link other = (Link) obj;
+		if (mHref == null) {
+			if (other.mHref != null)
+				return false;
+		} else if (!mHref.equals(other.mHref))
+			return false;
+		return true;
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((mHref == null) ? 0 : mHref.hashCode());
+		return result;
 	}
 }
