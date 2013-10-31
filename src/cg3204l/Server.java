@@ -32,7 +32,7 @@ public class Server {
                 }
                 // TODO Auto-generated method stub
                 try {
-                        mServerSocket = new ServerSocket(80);
+                        mServerSocket = new ServerSocket(8000);
                 } catch (IOException e) {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
@@ -129,9 +129,10 @@ public class Server {
                                                 P("search finished");                
                                                 long endTime = System.currentTimeMillis();
                                                 double timeUsed = endTime - startTime;
-                                                searchResult.setTime(timeUsed/1000);
-                                                searchResult.addImageList(onlineImages);
-                                                response = searchResult.toString();
+                                                SearchResult sr = new SearchResult();
+                                                sr.setTime(timeUsed/1000);
+                                                sr.addImageList(onlineImages);
+                                                response = sr.toString();
                                                 P(response);
                                                 mDB.insert(onlineImages, keys.get(0));
                                         }                                
