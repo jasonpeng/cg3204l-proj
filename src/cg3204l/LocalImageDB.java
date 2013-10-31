@@ -34,14 +34,14 @@ public class LocalImageDB {
 	    }
 	}
 	
-	public List<Image> search(String keyword, Date date) {
+	public List<Image> search(String keyword, Long ago) {
 		List<Image> imagelList = new ArrayList<Image>();
 		
 		try {
 			Statement statement = mConnection.createStatement();
 			ResultSet rs = statement
 					.executeQuery("select * from image where keyword like '%" 
-							+ keyword + "%'");
+							+ keyword + "%' and updatedTime > " + ago);
 			
 			while (rs.next()) {
 				Image image = new Image(rs.getString("src"), null, null, rs.getString("url"),
@@ -62,7 +62,7 @@ public class LocalImageDB {
 			
 			for (Image image : imageList) {
 				statement
-				.executeUpdate("insert or replace into image (src, url, keyword)values ('" + image.getSrc() + "','" + image.getSiteUrl() + "','" + keyword + "')");
+				.executeUpdate("insert or replace into image (src, url, keyword, updatedTime)values ('" + image.getSrc() + "','" + image.getSiteUrl() + "','" + keyword + "', " + image.getUpdatedTime() + ")");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

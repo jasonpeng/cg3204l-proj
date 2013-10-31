@@ -42,6 +42,7 @@ public class CreateImageDB {
 	    	System.out.println("src = " + rs.getString("src"));
 	        System.out.println("url = " + rs.getString("url"));
 	        System.out.println("keyowrd = " + rs.getString("keyword"));
+	        System.out.println("updatedTime = " + rs.getLong("updatedTime"));
 	      }
 	    }
 	    catch(SQLException e)

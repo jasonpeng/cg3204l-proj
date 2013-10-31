@@ -108,7 +108,7 @@ public class Server {
                                         SearchResult searchResult = new SearchResult();
                                         String response = "";
                                         //first search in local db
-                                        List<Image> localImages = mDB.search(keys.get(0), null);
+                                        List<Image> localImages = mDB.search(keys.get(0), System.currentTimeMillis() - 3600 * 24 * 1000);
                                         searchResult.addImageList(localImages);
                                         //if local images is enough
                                         if(localImages.size() >= imageNum){
