@@ -10,13 +10,15 @@ public class Image {
 	private String mCaption;
 	private String mSiteUrl;
 	private String mFilename;
+	private long mUpdatedTime;
 
-	public Image(String src, String alt, String caption, String siteurl) {
+	public Image(String src, String alt, String caption, String siteurl, long updatedTime) {
 		mSrc = src;
 		mAlt = alt;
 		mCaption = caption;
 		mSiteUrl = siteurl;
 		mFilename = filenameFromSrc(mSrc);
+		mUpdatedTime = updatedTime;
 	}
 
 	public void setSrc(String srcUrl) {
@@ -55,6 +57,14 @@ public class Image {
 		return mFilename;
 	}
 	
+	public long getUpdatedTime() {
+		return mUpdatedTime;
+	}
+
+	public void setUpdatedTime(long mUpdatedTime) {
+		this.mUpdatedTime = mUpdatedTime;
+	}
+
 	private String filenameFromSrc(String src) {
 		String filename = "";
 		Pattern filenamePattern = Pattern.compile("(.+)\\.(jpg|jpeg|gif|png|tiff)");

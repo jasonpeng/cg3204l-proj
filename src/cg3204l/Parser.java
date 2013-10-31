@@ -26,14 +26,15 @@ public class Parser {
 		String src;
 		String alt;
 		String caption;
-
+		long now = System.currentTimeMillis();
+		
 		// get all images
 		Elements images = doc.select("img[src~=(?i)\\.(png|jpe?g|gif|tiff)]");
 		for (Element image : images) {
 			src = image.attr("abs:src");
 			alt = image.attr("alt");
 			caption = image.attr("caption");
-			mImageList.add(new Image(src, alt, caption,mSiteUrl));
+			mImageList.add(new Image(src, alt, caption, mSiteUrl, now));
 		}
 
 		// get all links

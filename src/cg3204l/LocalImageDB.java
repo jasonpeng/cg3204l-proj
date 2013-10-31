@@ -44,7 +44,8 @@ public class LocalImageDB {
 							+ keyword + "%'");
 			
 			while (rs.next()) {
-				Image image = new Image(rs.getString("src"), null, null, rs.getString("url"));
+				Image image = new Image(rs.getString("src"), null, null, rs.getString("url"),
+						rs.getLong("updatedTime"));
 				imagelList.add(image);
 			}
 		} catch (SQLException e) {
