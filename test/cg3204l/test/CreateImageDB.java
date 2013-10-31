@@ -26,7 +26,7 @@ public class CreateImageDB {
 	      statement.setQueryTimeout(30);  // set timeout to 30 sec.
 
 	      statement.executeUpdate("drop table if exists image");
-	      statement.executeUpdate("create table image (id integer PRIMARY KEY, src string, url string, keyword string, unique(url, keyword))");
+	      statement.executeUpdate("create table image (id integer PRIMARY KEY, src string, url string, keyword string, unique(src, keyword))");
 	      /*LocalImageDB lb =new LocalImageDB();
 	      List<Image> imgs = new ArrayList<Image>();
 	      Image i = new Image("abc", null, null, "abcabc");
@@ -34,7 +34,7 @@ public class CreateImageDB {
 	      imgs.add(i);
 	      imgs.add(j);
 	      lb.insert(imgs, "money");*/
-	      ResultSet rs = statement.executeQuery("select * from image where keyword like '%abc%'");
+	      ResultSet rs = statement.executeQuery("select * from image where keyword like '%money%'");
 	      
 	      while(rs.next())
 	      {
