@@ -24,9 +24,16 @@
 	<div id="navi" class="container">
 		<h1  id="title">Imgle</h1>
 		<p id="description">powerful image searching</p>
-		<input type="text" id="keys"/>
-		<button id="btnGo" type="button" class="btn btn-default">Go
-		</button>
+		<div id="inputs" class="input-group">
+			<div id="numPicker" class="btn-group" title="set minimum results">
+				<button id="num-minus" type="button" class="btn btn-default">-</button>
+				<button id="imageNum" type="button" class="btn btn-default"></button>
+				<button id="num-plus" type="button" class="btn btn-default">+</button>
+			</div>
+			<input type="text" id="keys" class="form-control"/>
+			<button id="btnGo" type="button" class="btn btn-default">Go</button>
+		</div>
+		
 		<div id="loader"></div>
 		<div id="feedback"></div>
 	</div>

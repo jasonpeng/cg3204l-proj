@@ -1,4 +1,22 @@
-﻿$(document).ready(function(){
+﻿var MINIMUM = 1;
+var MAXIMUM = 10;
+var imageNum = 3;
+$(document).ready(function(){
+	$("#imageNum").html(imageNum);
+	
+	$("#num-plus").click(function(){
+		if(imageNum < MAXIMUM){
+			imageNum++;
+			$("#imageNum").html(imageNum);
+		}
+	});
+	
+	$("#num-minus").click(function(){
+		if(imageNum > MINIMUM){
+			imageNum--;
+			$("#imageNum").html(imageNum);
+		}
+	});
 	
 	$("#btnGo").click(function(){
 		if(!$(this).hasClass("disabled")){
@@ -32,10 +50,11 @@ function setLoader(status){
 function getResult(){
 	var keys = $("#keys").val();
 	var keywords = keys.split(" ").join("+");
+	var data = keywords + ":" + imageNum;
 	$.ajax({
 		type: "GET",
 		url: "",
-		data: keywords,
+		data: data,
 		cache: false,
 		success: function(jsonString){
 			displayResult(jsonString);

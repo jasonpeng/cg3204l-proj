@@ -13,6 +13,24 @@ color:#fff;
 font-size:21px;
 color:#cdbfe3;
 }
+
+#inputs{
+margin-left:200px;
+display:inline-block;
+padding-bottom:6px;
+}
+#imageNum{
+height:34px;
+}
+#keys{
+width:350px;
+height:34px;
+font-size:20px;
+
+}
+#btnGo{
+
+}
 #loader{
 width:45px;
 height:34px;
@@ -29,19 +47,9 @@ color:#fff;
 margin-bottom:-10px;
 display:inline-block;
 }
-#btnGo{
-margin-top:-3px;
-margin-bottom:3px;
-}
 #result{
 font-size:22px;
 margin-top:20px;
-}
-#keys{
-width:350px;
-height:34px;
-margin-left:300px;
-font-size:20px;
 }
 div.result{
 float: left;
@@ -53,7 +61,6 @@ margin-top:20px;
 overflow:hidden;
 border: 1px solid #eee;
 text-align:center;
-//background:#C0C0C0;
 }
 div.result img{
 max-height: 100%;
