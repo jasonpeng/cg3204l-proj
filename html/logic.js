@@ -6,6 +6,7 @@
 			clearResult();
 			$(this).addClass("disabled");
 			setLoader("show");
+			$("#feedback").html("Searching...");
 			getResult();
 		}
 	});

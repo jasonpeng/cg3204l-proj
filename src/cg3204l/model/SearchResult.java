@@ -1,9 +1,8 @@
-package cg3204l;
+package cg3204l.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import cg3204l.model.Image;
 
 public class SearchResult {
 	private double mTimeUsed;

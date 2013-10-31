@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import cg3204l.model.Image;
+import cg3204l.model.SearchResult;
 
 
 
