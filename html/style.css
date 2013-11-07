@@ -14,6 +14,10 @@ font-size:21px;
 color:#cdbfe3;
 }
 
+#tags{
+width:330px;
+margin-left:410px;
+}
 #inputs{
 margin-left:200px;
 display:inline-block;

@@ -1,6 +1,7 @@
 ﻿var MINIMUM = 1;
 var MAXIMUM = 10;
 var imageNum = 3;
+var tag = "news";
 $(document).ready(function(){
 	$("#imageNum").html(imageNum);
 	
@@ -34,7 +35,19 @@ $(document).ready(function(){
 			$("#btnGo").click();
 		}
 	});
+	
+	$("#tags li").click(function(){
+		clearTag();
+		$(this).addClass("active");
+		tag = $(this).prop("id");
+	});
 })
+
+function clearTag(){
+	$("#tags li").each(function(){
+		$(this).removeClass("active");
+	});
+}
 
 function setLoader(status){
 	if(status == "hide"){
@@ -50,7 +63,7 @@ function setLoader(status){
 function getResult(){
 	var keys = $("#keys").val();
 	var keywords = keys.split(" ").join("+");
-	var data = keywords + ":" + imageNum;
+	var data = keywords + "." + tag + ":" + imageNum;
 	$.ajax({
 		type: "GET",
 		url: "",
