@@ -69,7 +69,10 @@ public class HTTPRequest implements Runnable {
 					int imageNum = Integer.parseInt(command.substring(command
 							.indexOf(':') + 1));
 					command = command.substring(0, command.indexOf(':'));
-
+					//get search tag
+					String  tag = command.substring(command.indexOf('.') + 1);
+					command = command.substring(0, command.indexOf('.'));
+					
 					List<String> keys = Arrays.asList(command.split("\\+"));
 					SearchResult searchResult = new SearchResult();
 					String response = "";
@@ -90,7 +93,8 @@ public class HTTPRequest implements Runnable {
 						int limit = imageNum;
 						List<String> urls = Arrays.asList(
 								"http://www.bbc.co.uk",
-								"http://www.nytimes.com");
+								"http://www.nytimes.com",
+								"http://www.engadget.com");
 						Crawler crawler = new Crawler(urls);
 						crawler.setSearchLimit(limit);
 						List<Image> onlineImages = crawler.search(keys.get(0));
