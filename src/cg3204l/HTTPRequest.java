@@ -18,7 +18,36 @@ public class HTTPRequest implements Runnable {
 
 	private Socket mSocket;
 	private LocalImageDB mDB;
-
+	private static final List<String> travel = Arrays.asList(
+			"http://www.tripadvisor.com",
+			"http://travel.yahoo.com",
+			"http://sg.hotels.com",
+			"http://www.hotwire.com/sg",
+			"http://www.lonelyplanet.com");
+	private static final List<String> fashion = Arrays.asList(
+			"http://www.asos.com",
+			"http://www.other-shop.com",
+			"http://www.styloko.com",
+			"http://www.cavan.com",
+			"http://cropp.com");
+	private static final List<String> it = Arrays.asList(
+			"http://www.engadget.com",
+			"http://www.techeblog.com",
+			"http://gizmodo.com",
+			"http://boygeniusreport.com",
+			"http://www.wired.com");
+	private static final List<String> food = Arrays.asList(
+			"http://www.bigoven.com",
+			"http://www.food.com",
+			"http://www.chocablog.com",
+			"http://candccoffee.com",
+			"http://www.mealeo.com");
+	private static final List<String> news = Arrays.asList(
+			"http://edition.cnn.com",
+			"http://www.foxnews.com",
+			"http://www.nytimes.com",
+			"http://www.latimes.com",
+			"http://www.bbc.com");
 	public HTTPRequest(Socket connectionSocket) throws ClassNotFoundException {
 		mSocket = connectionSocket;
 		mDB = new LocalImageDB();
@@ -69,10 +98,9 @@ public class HTTPRequest implements Runnable {
 					int imageNum = Integer.parseInt(command.substring(command
 							.indexOf(':') + 1));
 					command = command.substring(0, command.indexOf(':'));
-					//get search tag
+
 					String  tag = command.substring(command.indexOf('.') + 1);
 					command = command.substring(0, command.indexOf('.'));
-					
 					List<String> keys = Arrays.asList(command.split("\\+"));
 					SearchResult searchResult = new SearchResult();
 					String response = "";
@@ -91,10 +119,30 @@ public class HTTPRequest implements Runnable {
 					// else need online searching
 					else {
 						int limit = imageNum;
-						List<String> urls = Arrays.asList(
-								"http://www.bbc.co.uk",
-								"http://www.nytimes.com",
-								"http://www.engadget.com");
+						List<String> urls;
+						System.out.println("tag: " + tag);
+						if(tag.equals("news")){
+							urls = news;
+						}
+						else if(tag.equals("food")){
+							urls = food;
+						}
+						else if(tag.equals("it")){
+							urls = it;
+						}
+						else if(tag.equals("fashion")){
+							urls = fashion;
+						}
+						else if(tag.equals("travel")){
+							urls = travel;
+						}
+						else{
+							urls = Arrays.asList(
+									"http://www.bbc.co.uk",
+									"http://www.nytimes.com",
+									"http://www.engadget.com");
+						}
+						
 						Crawler crawler = new Crawler(urls);
 						crawler.setSearchLimit(limit);
 						List<Image> onlineImages = crawler.search(keys.get(0));

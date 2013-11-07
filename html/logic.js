@@ -38,6 +38,7 @@ $(document).ready(function(){
 	
 	$("#tags li").click(function(){
 		clearTag();
+		$("#keys").val("");
 		$(this).addClass("active");
 		tag = $(this).prop("id");
 	});
